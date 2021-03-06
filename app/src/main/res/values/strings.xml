@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Singapore OT Pay Calculator</string>
+    <string name="worker_rough_work">Worker</string>
+    <string name="per_hours">$%1$s/hrs</string>
+    <string name="please_select_you_job_type">Please select you job type:</string>
+    <string name="clerk">Clerk</string>
+    <string name="up_to_4500">Max Claim $4500</string>
+    <string name="up_to_2600">Max Claim $2600</string>
+    <string name="monthly_basic_salary">Monthly Basic Salary:</string>
+    <string name="overtime_1_5">OverTime Hours 1.5:</string>
+    <string name="overtime_2_0">OverTime Hours 2.0:</string>
+    <string name="hourly_basic_rate">Basic Salary Per Hours:</string>
+    <string name="ot_pay_for_1_5">OT Pay for 1.5: $</string>
+    <string name="ot_pay_for_2_0">OT Pay for 2.0: $</string>
+    <string name="total_ot_pay">Total OT Pay: $</string>
+    <string name="total_salary">Total Salary: $</string>
+    <string name="calculate">Calculate</string>
+    <string name="basic_salary">$ Basic Salary</string>
+    <string name="hours">HOURS</string>
+    <string name="language">Language</string>
+    <string name="mom_hyperlink">"* This is a non-official app, all information is for reference only, please visit to MOM Official Website to get more information <a href="https://www.mom.gov.sg/employment-practices/hours-of-work-overtime-and-rest-days"> MOM </a> "</string>
+    <string name="calculation_will_have_some_percentage_error">* Calculation will have some percentage error.</string>
+    <string name="bonus_allowance">$ Bonus, Allowance</string>
+    <string name="other">Other:</string>
+    <string name="version" translatable="false">v1.0.090221</string>
+
+</resources>
