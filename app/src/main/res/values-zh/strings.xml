@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">新坡加班费计算器</string>
+    <string name="app_name">新加坡加班费计算器</string>
     <string name="worker_rough_work">工人</string>
     <string name="per_hours">$%1$s/每小时</string>
     <string name="please_select_you_job_type">请选择你的职业种类：</string>

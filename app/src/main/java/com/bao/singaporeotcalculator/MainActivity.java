@@ -12,11 +12,13 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -24,50 +26,29 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Double hourlyRate, hourlyRateLimit, hourlyRateNormal = 0.0, jobTypeLimit = 0.0;
+    private Double hourlyRate, hourlyRateLimit, hourlyRateNormal = 0.0;
     private Double otPay15, otPay20 ;
-    private final Double workerLimit = 4500.0, clerkLimit = 2600.0;
-    private DecimalFormat df =new DecimalFormat("#,###,###.##");
+    private final DecimalFormat df =new DecimalFormat("#,###,###.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupHyperLink();
-
-        //Select Job Type to change to OTPay Limit
-        RadioGroup radioJobType = findViewById(R.id.radioJobTypes);
-        radioJobType.clearCheck();
-        radioJobType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton select = group.findViewById(checkedId);
-                if(null != select && checkedId != -1){
-                   switch(select.getId()){
-                       case R.id.selectedWorker:
-                           jobTypeLimit = workerLimit; break;
-                       case R.id.selectedClerk:
-                           jobTypeLimit = clerkLimit; break;
-                   }
-                }
-            }
-        });
+        salaryType();
+        maxClaimType();
 
         //Main
         Button calculateButton = findViewById(R.id.buttonCalculate);
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(jobTypeLimit != 0.0) {
-                    calculateHourlyBasicRate();
-                    setHourlyBasicRate();
-                    setOtPay15();
-                    setOtPay20();
-                    setOtPayTotal();
-                    setTotalSalary();
-                }else{
-                    Toast.makeText(getApplicationContext(), getString(R.string.please_select_you_job_type), Toast.LENGTH_SHORT).show();
-                }
+                calculateHourlyBasicRate();
+                setHourlyBasicRate();
+                setOtPay15();
+                setOtPay20();
+                setOtPayTotal();
+                setTotalSalary();
             }
         });
     }
@@ -120,6 +101,49 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void salaryType() {
+        Spinner salarySpinner = (Spinner)  findViewById(R.id.spinnerSalaryType);
+
+        ArrayAdapter<String> salaryAdapter =new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.salaryType));
+        salaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        salarySpinner.setAdapter(salaryAdapter);
+
+        salarySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void maxClaimType() {
+        Spinner claimSpinner = (Spinner)  findViewById(R.id.spinnerMaxClaimType);
+        ArrayAdapter<String> claimAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.claimType));
+        claimAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        claimSpinner.setAdapter(claimAdapter);
+
+        claimSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     //Calculate Hourly Basic Rate
     private void calculateHourlyBasicRate()
     {
@@ -127,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(!(eBasicSalary.getText().toString().isEmpty())) {
             Double dBasicSalary = Double.parseDouble(eBasicSalary.getText().toString());
-            hourlyRateLimit = (12 * jobTypeLimit) / (52 * 44);
+            hourlyRateLimit = (12 * 2600.0) / (52 * 44);
             hourlyRateNormal = (12 * dBasicSalary) / (52 * 44);
             if(hourlyRateLimit <= hourlyRateNormal) hourlyRate =hourlyRateLimit ;
                     else hourlyRate = hourlyRateNormal;
