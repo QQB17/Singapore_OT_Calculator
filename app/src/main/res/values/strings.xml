@@ -11,13 +11,15 @@
     <string name="overtime_1_5">OverTime Hours 1.5:</string>
     <string name="overtime_2_0">OverTime Hours 2.0:</string>
     <string name="hourly_basic_rate">Basic Salary Per Hours:</string>
-    <string name="ot_pay_for_1">OT Pay for 1.0: $</string>
-    <string name="ot_pay_for_1_5">OT Pay for 1.5: $</string>
-    <string name="ot_pay_for_2_0">OT Pay for 2.0: $</string>
+    <string name="ot_Pay">OT Pay for</string>
+    <string name="ot_pay_rate1">1.5: $</string>
+    <string name="ot_pay_rate2">2.0: $</string>
+    <string name="ot_pay_rate3">3.0: $</string>
     <string name="total_ot_pay">Total OT Pay: $</string>
     <string name="total_salary">Total Salary: $</string>
     <string name="calculate">Calculate</string>
     <string name="basic_salary">$ Basic Salary</string>
+    <string name="basic_salary2">Basic Salary</string>
     <string name="hours">Hours</string>
     <string name="language">Language</string>
     <string name="mom_hyperlink">"* This is a non-official app, all information is for reference only, please visit to MOM Official Website to get more information <a href="https://www.mom.gov.sg/employment-practices/hours-of-work-overtime-and-rest-days"> MOM </a> "</string>
@@ -26,16 +28,13 @@
     <string name="other">Other:</string>
     <string name="version" translatable="false">v1.0.090221</string>
     <string name="salary">$ Max Claim Salary</string>
+    <string name="maxClaim">Max Claim</string>
 
 
     <string-array name="salaryType">
-        <item>Monthly Basic Salary</item>
-        <item>Hourly Basic Salary</item>
+        <item>Monthly</item>
+        <item>Hourly</item>
     </string-array>
 
-    <string-array name="claimType">
-        <item>Monthly Max Claim</item>
-        <item>Hourly Max Claim</item>
-    </string-array>
 
 </resources>
