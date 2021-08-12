@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,13 +104,15 @@ public class MainActivity extends AppCompatActivity {
         Spinner salarySpinner = (Spinner)  findViewById(R.id.spinnerSalaryType);
 
         ArrayAdapter<String> salaryAdapter =new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.salaryType));
+                R.layout.spinner_item, getResources().getStringArray(R.array.salaryType));
         salaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         salarySpinner.setAdapter(salaryAdapter);
 
         salarySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { salaryType = position; }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                salaryType = position;
+            }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
@@ -119,13 +122,15 @@ public class MainActivity extends AppCompatActivity {
     private void getMaxClaimType() {
         Spinner claimSpinner = (Spinner)  findViewById(R.id.spinnerMaxClaimType);
         ArrayAdapter<String> claimAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.salaryType));
+                R.layout.spinner_item, getResources().getStringArray(R.array.salaryType));
         claimAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         claimSpinner.setAdapter(claimAdapter);
 
         claimSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { claimType = position; }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                claimType = position;
+            }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
