@@ -57,7 +57,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/overtime"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/textBasicSalary"
             app:layout_constraintTop_toBottomOf="@+id/textBasicSalary" />
 
@@ -70,7 +70,7 @@
             android:ems="2"
             android:inputType="numberDecimal"
             android:text="1.5"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView4"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="@+id/textView4">
@@ -84,7 +84,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/overtime"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -97,7 +97,7 @@
             android:ems="2"
             android:inputType="numberDecimal"
             android:text="2.0"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/textView5">
@@ -112,7 +112,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/overtime"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -126,7 +126,7 @@
             android:ems="2"
             android:inputType="numberDecimal"
             android:text="3.0"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="@+id/textView6">
@@ -140,7 +140,7 @@
             android:layout_marginTop="22dp"
             android:text="@string/other"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/textView6"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -153,7 +153,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/maxClaim"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -164,7 +164,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/basic_salary2"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/textMaxClaim"
             app:layout_constraintTop_toBottomOf="@+id/textMaxClaim" />
 
@@ -193,7 +193,7 @@
             android:ems="10"
             android:hint="@string/salary"
             android:inputType="numberDecimal"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></EditText>
@@ -205,7 +205,7 @@
             android:ems="10"
             android:hint="@string/basic_salary"
             android:inputType="numberDecimal"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputMaxClaimSalary" />
@@ -217,7 +217,7 @@
             android:ems="10"
             android:hint="@string/hours"
             android:inputType="numberDecimal"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputBasicSalary" />
@@ -229,7 +229,7 @@
             android:ems="10"
             android:hint="@string/hours"
             android:inputType="numberDecimal"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputOt1" />
@@ -241,7 +241,7 @@
             android:ems="10"
             android:hint="@string/hours"
             android:inputType="numberDecimal"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputOt2" />
@@ -253,7 +253,7 @@
             android:ems="10"
             android:hint="@string/bonus_allowance"
             android:inputType="numberDecimal"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputOt3" />
@@ -281,7 +281,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/hourly_basic_rate"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/payInformation"
             app:layout_constraintTop_toTopOf="@+id/payInformation" />
 
@@ -293,7 +293,7 @@
             android:layout_marginLeft="4dp"
             android:text="@string/ot_pay_rate1"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/textOtPay"
             app:layout_constraintStart_toEndOf="@+id/textOtPay"
             app:layout_constraintTop_toTopOf="@+id/textOtPay" />
@@ -306,7 +306,7 @@
             android:layout_marginLeft="8dp"
             android:hint="0.0"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textHourlyBasicRate"
             app:layout_constraintStart_toEndOf="@+id/textHourlyBasicRate"
@@ -321,7 +321,7 @@
             android:layout_marginLeft="8dp"
             android:hint="0.0"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textOtRate3"
             app:layout_constraintStart_toEndOf="@+id/textOtRate3"
@@ -335,7 +335,7 @@
             android:layout_marginLeft="4dp"
             android:text="@string/ot_pay_rate2"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/textOtPay2"
             app:layout_constraintStart_toEndOf="@+id/textOtPay2"
             app:layout_constraintTop_toTopOf="@+id/textOtPay2" />
@@ -347,7 +347,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/total_ot_pay"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/textOtPay3"
             app:layout_constraintTop_toBottomOf="@+id/textOtPay3" />
 
@@ -359,7 +359,7 @@
             android:layout_marginLeft="8dp"
             android:hint="0.0"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textOtRate1"
             app:layout_constraintStart_toEndOf="@+id/textOtRate1"
@@ -373,7 +373,7 @@
             android:layout_marginLeft="8dp"
             android:hint="0.0"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textOtRate2"
             app:layout_constraintStart_toEndOf="@+id/textOtRate2"
@@ -388,30 +388,19 @@
             android:layout_marginLeft="8dp"
             android:hint="0.0"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textTotalOtPay"
             app:layout_constraintStart_toEndOf="@+id/textTotalOtPay"
             app:layout_constraintTop_toTopOf="@+id/textTotalOtPay" />
 
-        <TextView
-            android:id="@+id/otPay30hrs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="@+id/showOtPay3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/showOtPay3"
-            app:layout_constraintTop_toTopOf="@+id/showOtPay3" />
 
         <TextView
             android:id="@+id/otPay15hrs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="@+id/showOtPay1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -423,12 +412,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@+id/showOtPay3"
+            app:layout_constraintBottom_toBottomOf="@+id/showOtPay2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/showOtPay2"
-            app:layout_constraintTop_toBottomOf="@+id/showOtPay1" />
+            app:layout_constraintTop_toTopOf="@+id/showOtPay2" />
+
+        <TextView
+            android:id="@+id/otPay30hrs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/showOtPay3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/showOtPay3"
+            app:layout_constraintTop_toTopOf="@+id/showOtPay3" />
 
         <TextView
             android:id="@+id/textTotalSalary"
@@ -438,7 +439,7 @@
             android:layout_marginBottom="8dp"
             android:text="@string/total_salary"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textTotalOtPay"
             app:layout_constraintTop_toBottomOf="@+id/textTotalOtPay" />
@@ -451,7 +452,7 @@
             android:layout_marginLeft="8dp"
             android:hint="0.0"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textTotalSalary"
             app:layout_constraintStart_toEndOf="@+id/textTotalSalary"
@@ -465,7 +466,7 @@
             android:layout_marginLeft="4dp"
             android:text="@string/ot_pay_rate3"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/textOtPay3"
             app:layout_constraintStart_toEndOf="@+id/textOtPay3"
             app:layout_constraintTop_toTopOf="@+id/textOtPay3" />

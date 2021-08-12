@@ -26,8 +26,8 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Double hourlyRate, hourlyRateLimit, hourlyRateNormal = 0.0;
-    private Double otPay15, otPay20 , otPay30;
+    private double hourlyRate, hourlyRateLimit, hourlyRateNormal = 0.0;
+    private double otPay15, otPay20, otPay30;
     private final DecimalFormat df =new DecimalFormat("#,###,###.##");
     private int claimType,salaryType; // Monthly = 0 , Hourly = 1
 
@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Main
         Button calculateButton = findViewById(R.id.buttonCalculate);
-        calculateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        calculateButton.setOnClickListener((View v) -> {
                 calculateHourlyBasicRate();
                 setHourlyBasicRate();
                 setOtPay15();
@@ -51,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 setOtPay30();
                 setOtPayTotal();
                 setTotalSalary();
-
-            }
         });
     }
 
@@ -101,13 +97,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(0, 0);
         }
-
     }
 
     private void getSalaryType() {
         Spinner salarySpinner = (Spinner)  findViewById(R.id.spinnerSalaryType);
 
-        ArrayAdapter<String> salaryAdapter =new ArrayAdapter<String>(this,
+        ArrayAdapter<String> salaryAdapter =new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.salaryType));
         salaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         salarySpinner.setAdapter(salaryAdapter);
@@ -123,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getMaxClaimType() {
         Spinner claimSpinner = (Spinner)  findViewById(R.id.spinnerMaxClaimType);
-        ArrayAdapter<String> claimAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> claimAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.salaryType));
         claimAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         claimSpinner.setAdapter(claimAdapter);
@@ -140,18 +135,13 @@ public class MainActivity extends AppCompatActivity {
     //Calculate Hourly Basic Rate
     private void calculateHourlyBasicRate()
     {
-        EditText eBasicSalary = findViewById(R.id.inputBasicSalary);
-        EditText eMaxClaimWage = findViewById(R.id.inputMaxClaimSalary);
-        Double dMaxClaimWage;
+        String eBasicSalary = ((EditText)findViewById(R.id.inputBasicSalary)).getText().toString();
+        String eMaxClaimWage = ((EditText)findViewById(R.id.inputMaxClaimSalary)).getText().toString();
 
-        if(!(eMaxClaimWage.getText().toString().isEmpty())){
-            dMaxClaimWage = Double.parseDouble(eMaxClaimWage.getText().toString());
-        } else {
-            dMaxClaimWage = Double.MAX_VALUE;
-        }
+        double dMaxClaimWage = (eMaxClaimWage.isEmpty()) ? Double.MAX_VALUE :Double.parseDouble(eMaxClaimWage);
 
-        if(!(eBasicSalary.getText().toString().isEmpty())) {
-            Double dBasicSalary = Double.parseDouble(eBasicSalary.getText().toString());
+        if(!(eBasicSalary.isEmpty())) {
+            double dBasicSalary = Double.parseDouble(eBasicSalary);
 
             // Monthly
             if(claimType == 0)
@@ -168,10 +158,8 @@ public class MainActivity extends AppCompatActivity {
                 hourlyRateNormal = dBasicSalary;
 
             // Limit the calculation
-            if(hourlyRateLimit <= hourlyRateNormal)
-                hourlyRate =hourlyRateLimit ;
-            else
-                hourlyRate = hourlyRateNormal;
+            hourlyRate = (hourlyRateLimit <= hourlyRateNormal) ? hourlyRateLimit : hourlyRateNormal;
+
         }else{
             hourlyRate = 0.0;
             hourlyRateNormal =0.0;
@@ -186,80 +174,93 @@ public class MainActivity extends AppCompatActivity {
 
     private double calculateOtPay15()
     {
-        EditText eOt15 = findViewById(R.id.inputOt1);
-        EditText eRate1 = findViewById(R.id.editRate1);
+        String inputHour1 = ((EditText)findViewById(R.id.inputOt1)).getText().toString();
+        String rate1 = ((EditText)findViewById(R.id.editRate1)).getText().toString();
         TextView viewRate1 = findViewById(R.id.textOtRate1);
 
+        if( hourlyRate == 0.0 || rate1.isEmpty()) return 0.0;
+        String text1 = rate1 +  ": $";
+        viewRate1.setText(text1);
+        otPay15 = hourlyRate * Double.parseDouble(rate1);
 
-        if(eOt15.getText().toString().isEmpty() || hourlyRate == 0.0 || eRate1.getText().toString().isEmpty()) return 0.0;
-        viewRate1.setText(eRate1.getText().toString());
-        otPay15 = hourlyRate * Double.parseDouble(eRate1.getText().toString());
-        Double dOt15 = Double.parseDouble(eOt15.getText().toString());
-        return otPay15 * dOt15;
+        if(inputHour1.isEmpty()) return 0.0;
+
+        return otPay15 * Double.parseDouble(inputHour1);
     }
 
     private void setOtPay15()
     {
-        if(hourlyRate == 0.0) return;
-
         TextView tOtPay15 = findViewById(R.id.showOtPay1);
         tOtPay15.setText(df.format(calculateOtPay15()));
+
         TextView otPay15hrs = findViewById(R.id.otPay15hrs);
-        String text = getString(R.string.per_hours, df.format(otPay15));
-        otPay15hrs.setText(text);
+        if(hourlyRate == 0.0) {
+            otPay15hrs.setText("");
+        }else {
+            String text = getString(R.string.per_hours, df.format(otPay15));
+            otPay15hrs.setText(text);
+        }
     }
 
 
     private double calculateOtPay20()
     {
-        EditText eOt20 = findViewById(R.id.inputOt2);
-        EditText eRate2 = findViewById(R.id.editRate2);
+        String inputHour2 = ((EditText)findViewById(R.id.inputOt2)).getText().toString();
+        String rate2 = ((EditText)findViewById(R.id.editRate2)).getText().toString();
         TextView viewRate2 = findViewById(R.id.textOtRate2);
 
+        if(hourlyRate == 0.0 || rate2.isEmpty()) return 0.0;
+        String text2 = rate2 + ": $";
+        viewRate2.setText(text2);
+        otPay20 = hourlyRate * Double.parseDouble(rate2);
 
+        if(inputHour2.isEmpty()) return 0.0;
 
-        if(eOt20.getText().toString().isEmpty() || hourlyRate == 0.0 || eRate2.getText().toString().isEmpty()) return 0.0;
-        viewRate2.setText(eRate2.getText().toString());
-        otPay20 = hourlyRate * Double.parseDouble(eRate2.getText().toString());
-        Double dOt20 = Double.parseDouble(eOt20.getText().toString());
-        return otPay20 * dOt20;
+        return otPay20 *  Double.parseDouble(inputHour2);
     }
 
     private void setOtPay20()
     {
-        if(hourlyRate == 0.0) return;
-
         TextView tOtPay20 = findViewById(R.id.showOtPay2);
         tOtPay20.setText(df.format(calculateOtPay20()));
-        TextView otPay20hrs = findViewById(R.id.otPay20hrs);
-        String text = getString(R.string.per_hours, df.format(otPay20));
-        otPay20hrs.setText(text);
 
+        TextView otPay20hrs = findViewById(R.id.otPay20hrs);
+        if(hourlyRate == 0.0) {
+            otPay20hrs.setText("");
+        }else {
+            String text = getString(R.string.per_hours, df.format(otPay20));
+            otPay20hrs.setText(text);
+        }
     }
 
     private double calculateOtPay30()
     {
-        EditText eOt30 = findViewById(R.id.inputOt3);
-        EditText eRate3 = findViewById(R.id.editRate3);
+        String inputHour3 = ((EditText)findViewById(R.id.inputOt3)).getText().toString();
+        String rate3 = ((EditText)findViewById(R.id.editRate3)).getText().toString();
         TextView viewRate3 = findViewById(R.id.textOtRate3);
 
+        if(hourlyRate == 0.0 || rate3.isEmpty()) return 0.0;
+        String text3 = rate3 + ": $";
+        viewRate3.setText(text3);
+        otPay30 = hourlyRate * Double.parseDouble(rate3);
 
-        if(eOt30.getText().toString().isEmpty() || hourlyRate == 0.0 || eRate3.getText().toString().isEmpty()) return 0.0;
-        viewRate3.setText(eRate3.getText().toString());
-        otPay30 = hourlyRate * Double.parseDouble(eRate3.getText().toString());
-        Double dOt30 = Double.parseDouble(eOt30.getText().toString());
-        return otPay30 * dOt30;
+        if(inputHour3.isEmpty()) return 0.0;
+
+        return otPay30 * Double.parseDouble(inputHour3);
     }
 
     private void setOtPay30()
     {
-        if(hourlyRate == 0.0) return;
-
         TextView tOtPay30 = findViewById(R.id.showOtPay3);
         tOtPay30.setText(df.format(calculateOtPay30()));
         TextView otPay30hrs = findViewById(R.id.otPay30hrs);
-        String text = getString(R.string.per_hours, df.format(otPay30));
-        otPay30hrs.setText(text);
+
+        if(hourlyRate == 0.0) {
+            otPay30hrs.setText("");
+        }else {
+            String text = getString(R.string.per_hours, df.format(otPay30));
+            otPay30hrs.setText(text);
+        }
     }
 
     private double calculateOtPayTotal()
@@ -269,29 +270,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void setOtPayTotal()
     {
-        TextView tOtPayTotal = findViewById(R.id.showOtPayTotal);
-        tOtPayTotal.setText(df.format(calculateOtPayTotal()));
+        ((TextView)findViewById(R.id.showOtPayTotal)).setText(df.format(calculateOtPayTotal()));
     }
 
     private Double getOtherSalary(){
-        EditText eOther = findViewById(R.id.inputOther);
-        if(eOther.getText().toString().isEmpty()){
+        String eOther =((EditText)findViewById(R.id.inputOther)).getText().toString();
+        if(eOther.isEmpty()){
             return 0.0;
         }else{
-            Double dOther = Double.parseDouble(eOther.getText().toString());
-            return dOther;
+            return Double.parseDouble(eOther);
         }
     }
 
     private void setTotalSalary() {
         TextView tTotalSalary = findViewById(R.id.showTotalSalary);
-        EditText eBasicSalary = findViewById(R.id.inputBasicSalary);
+        String eBasicSalary =((EditText)findViewById(R.id.inputBasicSalary)).getText().toString();
 
-        if(eBasicSalary.getText().toString().isEmpty()) {
+        if(eBasicSalary.isEmpty()) {
             tTotalSalary.setText("0");
         }else{
-            Double dBasicSalary = Double.parseDouble(eBasicSalary.getText().toString());
-            tTotalSalary.setText(df.format(dBasicSalary + calculateOtPayTotal() + getOtherSalary()));
+            tTotalSalary.setText(df.format(Double.parseDouble(eBasicSalary) + calculateOtPayTotal() + getOtherSalary()));
         }
     }
 
