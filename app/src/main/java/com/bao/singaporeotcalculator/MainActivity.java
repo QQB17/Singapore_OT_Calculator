@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getSalaryType() {
-        Spinner salarySpinner = (Spinner)  findViewById(R.id.spinnerSalaryType);
+        Spinner salarySpinner = findViewById(R.id.spinnerSalaryType);
 
         ArrayAdapter<String> salaryAdapter =new ArrayAdapter<>(this,
                 R.layout.spinner_item, getResources().getStringArray(R.array.salaryType));
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getMaxClaimType() {
-        Spinner claimSpinner = (Spinner)  findViewById(R.id.spinnerMaxClaimType);
+        Spinner claimSpinner =findViewById(R.id.spinnerMaxClaimType);
         ArrayAdapter<String> claimAdapter = new ArrayAdapter<>(this,
                 R.layout.spinner_item, getResources().getStringArray(R.array.salaryType));
         claimAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

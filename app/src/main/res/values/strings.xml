@@ -3,7 +3,7 @@
     <string name="per_hours">$%1$s/hrs</string>
     <string name="monthly_basic_salary">Monthly Basic Salary:</string>
     <string name="overtime">OverTime Rate:</string>
-    <string name="hourly_basic_rate">Basic Salary Per Hours:</string>
+    <string name="hourly_basic_rate">Basic Salary Per Hours: $</string>
     <string name="ot_Pay">OT Pay for</string>
     <string name="ot_pay_rate1" translatable="false">1.5: $</string>
     <string name="ot_pay_rate2" translatable="false">2.0: $</string>
@@ -19,15 +19,13 @@
     <string name="calculation_will_have_some_percentage_error">* Calculation will have some percentage error.</string>
     <string name="bonus_allowance">$ Bonus, Allowance</string>
     <string name="other">Other:</string>
-    <string name="version" translatable="false">v1.0.090221</string>
+    <string name="version" translatable="false">v1.1.140821</string>
     <string name="salary">$ Max Claim Salary</string>
     <string name="maxClaim">Max Claim</string>
-
 
     <string-array name="salaryType">
         <item>Monthly</item>
         <item>Hourly</item>
     </string-array>
-
 
 </resources>
