@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">新坡加班费计算器</string>
-    <string name="worker_rough_work">工人</string>
+    <string name="app_name">新加坡加班费计算器</string>
     <string name="per_hours">$%1$s/每小时</string>
-    <string name="please_select_you_job_type">请选择你的职业种类：</string>
-    <string name="clerk">文书</string>
-    <string name="up_to_4500">最高为 $4500</string>
-    <string name="up_to_2600">最高为 $2600</string>
     <string name="monthly_basic_salary">每月基本工资:</string>
-    <string name="overtime_1_5">1.5倍加班时间:</string>
-    <string name="overtime_2_0">2倍加班时间:</string>
     <string name="hourly_basic_rate">每小时基本工资: $</string>
-    <string name="ot_pay_for_1_5">1.5倍的加班费: $</string>
-    <string name="ot_pay_for_2_0">2倍的加班费: $</string>
     <string name="total_ot_pay">总数加班费: $</string>
     <string name="total_salary">总数工资: $</string>
     <string name="calculate">计算</string>
@@ -23,4 +14,14 @@
     <string name="calculation_will_have_some_percentage_error">* 计算结果会有百分比误差。</string>
     <string name="bonus_allowance">$ 奖金，补贴</string>
     <string name="other">其他:</string>
+    <string name="overtime">加班倍率:</string>
+    <string name="ot_Pay">加班费</string>
+    <string name="basic_salary2">基本工资</string>
+    <string name="salary">$ 最大可计算工资</string>
+    <string name="maxClaim">最大可计算工资</string>
+
+    <string-array name="salaryType">
+        <item>每个月</item>
+        <item>每小时</item>
+    </string-array>
 </resources>
