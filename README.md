@@ -13,3 +13,6 @@
 - Aternative monthly or houlry salary
 - Able to alter overtime rate.
 - Add one more row for overtime hourly rate.
+
+##### Version 1.3 -- 17 Aug 2021
+- Fixed language bug
