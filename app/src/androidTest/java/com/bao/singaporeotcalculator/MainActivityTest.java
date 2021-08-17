@@ -29,6 +29,7 @@ import androidx.test.rule.ActivityTestRule;
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -279,6 +280,7 @@ public class MainActivityTest {
     }
 
     @Test
+    @Ignore
     public void changeLanguage(){
         openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         onView(withText("Language")).perform(click());

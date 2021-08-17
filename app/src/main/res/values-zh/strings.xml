@@ -4,8 +4,8 @@
     <string name="per_hours">$%1$s/每小时</string>
     <string name="monthly_basic_salary">每月基本工资:</string>
     <string name="hourly_basic_rate">每小时基本工资: $</string>
-    <string name="total_ot_pay">总数加班费: $</string>
-    <string name="total_salary">总数工资: $</string>
+    <string name="total_ot_pay">总加班费: $</string>
+    <string name="total_salary">总工资: $</string>
     <string name="calculate">计算</string>
     <string name="basic_salary">$ 基本工资</string>
     <string name="hours">小时</string>
@@ -18,10 +18,8 @@
     <string name="ot_Pay">加班费</string>
     <string name="basic_salary2">基本工资</string>
     <string name="salary">$ 最大可计算工资</string>
-    <string name="maxClaim">最大可计算工资</string>
+    <string name="maxClaim">加班工资</string>
+    <string name="monthly">每个月</string>
+    <string name="hourly">每小时</string>
 
-    <string-array name="salaryType">
-        <item>每个月</item>
-        <item>每小时</item>
-    </string-array>
 </resources>

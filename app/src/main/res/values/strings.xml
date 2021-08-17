@@ -19,13 +19,15 @@
     <string name="calculation_will_have_some_percentage_error">* Calculation will have some percentage error.</string>
     <string name="bonus_allowance">$ Bonus, Allowance</string>
     <string name="other">Other:</string>
-    <string name="version" translatable="false">v1.1.140821</string>
+    <string name="version" translatable="false">v1.2.170821</string>
     <string name="salary">$ Max Claim Salary</string>
-    <string name="maxClaim">Max Claim</string>
+    <string name="maxClaim">OT Claim</string>
+    <string name="monthly">Monthly</string>
+    <string name="hourly">Hourly</string>
 
     <string-array name="salaryType">
-        <item>Monthly</item>
-        <item>Hourly</item>
+        <item>@string/monthly</item>
+        <item>@string/hourly</item>
     </string-array>
 
 </resources>
