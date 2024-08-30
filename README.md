@@ -10,9 +10,13 @@
 ### Update Features
 ##### Version 1.1 -- 14 Aug 2021
 - Optional max claim input
-- Aternative monthly or houlry salary
+- Alternative monthly or hourly salary
 - Able to alter overtime rate.
-- Add one more row for overtime hourly rate.
+- Add one more row for the overtime hourly rate.
 
 ##### Version 1.3 -- 17 Aug 2021
 - Fixed language bug
+
+##### Version 1.4 -- 29 Aug 2024
+- Supporting Android 14
+
