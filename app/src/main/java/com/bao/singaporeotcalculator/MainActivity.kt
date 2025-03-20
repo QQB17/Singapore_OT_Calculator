@@ -1,305 +1,298 @@
-package com.bao.singaporeotcalculator;
+package com.bao.singaporeotcalculator
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Build
+import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import java.text.DecimalFormat
+import java.util.Locale
 
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
-import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+class MainActivity : AppCompatActivity() {
+    private val df = DecimalFormat("#,###,###.##")
+    private var hourlyRate = 0.0
+    private var hourlyRateLimit = 0.0
+    private var hourlyRateNormal = 0.0
+    private var otPay15 = 0.0
+    private var otPay20 = 0.0
+    private var otPay30 = 0.0
+    private var claimType = 0
+    private var salaryType = 0 // Monthly = 0 , Hourly = 1
 
-
-import java.util.Locale;
-import java.text.DecimalFormat;
-
-public class MainActivity extends AppCompatActivity {
-
-    private double hourlyRate, hourlyRateLimit, hourlyRateNormal = 0.0;
-    private double otPay15, otPay20, otPay30;
-    private final DecimalFormat df =new DecimalFormat("#,###,###.##");
-    private int claimType,salaryType; // Monthly = 0 , Hourly = 1
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        getSalaryType();
-        getMaxClaimType();
-        setupHyperLink();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        getSalaryType()
+        maxClaimType
+        setupHyperLink()
 
         //Main
-        Button calculateButton = findViewById(R.id.buttonCalculate);
-        calculateButton.setOnClickListener((View v) -> {
-                calculateHourlyBasicRate();
-                setHourlyBasicRate();
-                setOtPay15();
-                setOtPay20();
-                setOtPay30();
-                setOtPayTotal();
-                setTotalSalary();
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
-            case R.id.english:
-                setAppLocate("en");
-                Toast.makeText(MainActivity.this, "English", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.chinese:
-                setAppLocate("zh");
-                Toast.makeText(MainActivity.this, "中文", Toast.LENGTH_SHORT).show();
-                break;
+        val calculateButton = findViewById<Button>(R.id.buttonCalculate)
+        calculateButton.setOnClickListener { v: View? ->
+            calculateHourlyBasicRate()
+            setHourlyBasicRate()
+            setOtPay15()
+            setOtPay20()
+            setOtPay30()
+            setOtPayTotal()
+            setTotalSalary()
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.english -> {
+                setAppLocate("en")
+                Toast.makeText(this@MainActivity, "English", Toast.LENGTH_SHORT).show()
+            }
+
+            R.id.chinese -> {
+                setAppLocate("zh")
+                Toast.makeText(this@MainActivity, "中文", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     //Change Language
-    private void setAppLocate(String localeCode)
-    {
-        Resources resources = getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-            config.setLocale(new Locale(localeCode.toLowerCase()));
+    private fun setAppLocate(localeCode: String) {
+        val resources = resources
+        val dm = resources.displayMetrics
+        val config = resources.configuration
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(Locale(localeCode.lowercase(Locale.getDefault())))
         } else {
-            config.locale = new Locale(localeCode.toLowerCase());
+            config.locale = Locale(localeCode.lowercase(Locale.getDefault()))
         }
-        resources.updateConfiguration(config,dm);
+        resources.updateConfiguration(config, dm)
         //Refresh will changing language
-        if(Build.VERSION.SDK_INT >=11){
-            super.recreate();
-        }else {
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
-            overridePendingTransition(0, 0);
+        if (Build.VERSION.SDK_INT >= 11) {
+            super.recreate()
+        } else {
+            val intent = intent
+            finish()
+            startActivity(intent)
+            overridePendingTransition(0, 0)
         }
     }
 
-    private void getSalaryType() {
-        Spinner salarySpinner = findViewById(R.id.spinnerSalaryType);
+    private fun getSalaryType() {
+        val salarySpinner = findViewById<Spinner>(R.id.spinnerSalaryType)
 
-        ArrayAdapter<String> salaryAdapter =new ArrayAdapter<>(this,
-                R.layout.spinner_item, getResources().getStringArray(R.array.salaryType));
-        salaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        salarySpinner.setAdapter(salaryAdapter);
+        val salaryAdapter = ArrayAdapter(
+            this,
+            R.layout.spinner_item, resources.getStringArray(R.array.salaryType)
+        )
+        salaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        salarySpinner.adapter = salaryAdapter
 
-        salarySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                salaryType = position;
+        salarySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                salaryType = position
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
-    private void getMaxClaimType() {
-        Spinner claimSpinner =findViewById(R.id.spinnerMaxClaimType);
-        ArrayAdapter<String> claimAdapter = new ArrayAdapter<>(this,
-                R.layout.spinner_item, getResources().getStringArray(R.array.salaryType));
-        claimAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        claimSpinner.setAdapter(claimAdapter);
+    private val maxClaimType: Unit
+        get() {
+            val claimSpinner = findViewById<Spinner>(R.id.spinnerMaxClaimType)
+            val claimAdapter =
+                ArrayAdapter(
+                    this,
+                    R.layout.spinner_item, resources.getStringArray(R.array.salaryType)
+                )
+            claimAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            claimSpinner.adapter = claimAdapter
 
-        claimSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                claimType = position;
+            claimSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    claimType = position
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
-    }
+        }
 
     //Calculate Hourly Basic Rate
-    private void calculateHourlyBasicRate()
-    {
-        String eBasicSalary = ((EditText)findViewById(R.id.inputBasicSalary)).getText().toString();
-        String eMaxClaimWage = ((EditText)findViewById(R.id.inputMaxClaimSalary)).getText().toString();
+    private fun calculateHourlyBasicRate() {
+        val eBasicSalary = (findViewById<View>(R.id.inputBasicSalary) as EditText).text.toString()
+        val eMaxClaimWage =
+            (findViewById<View>(R.id.inputMaxClaimSalary) as EditText).text.toString()
 
-        double dMaxClaimWage = (eMaxClaimWage.isEmpty()) ? Double.MAX_VALUE :Double.parseDouble(eMaxClaimWage);
+        val dMaxClaimWage =
+            if ((eMaxClaimWage.isEmpty())) Double.MAX_VALUE else eMaxClaimWage.toDouble()
 
-        if(!(eBasicSalary.isEmpty())) {
-            double dBasicSalary = Double.parseDouble(eBasicSalary);
-
-            // Monthly
-            if(claimType == 0)
-                hourlyRateLimit = 12.0 * dMaxClaimWage / (52 * 44);
-            // Hourly
-            else if(claimType == 1)
-                hourlyRateLimit = dMaxClaimWage;
+        if (!(eBasicSalary.isEmpty())) {
+            val dBasicSalary = eBasicSalary.toDouble()
 
             // Monthly
-            if(salaryType == 0)
-                hourlyRateNormal = (12 * dBasicSalary) / (52 * 44);
-            // Hourly
-            else if(salaryType == 1)
-                hourlyRateNormal = dBasicSalary;
+            if (claimType == 0) hourlyRateLimit = 12.0 * dMaxClaimWage / (52 * 44)
+            else if (claimType == 1) hourlyRateLimit = dMaxClaimWage
+
+            // Monthly
+            if (salaryType == 0) hourlyRateNormal = (12 * dBasicSalary) / (52 * 44)
+            else if (salaryType == 1) hourlyRateNormal = dBasicSalary
 
             // Limit the calculation
-            hourlyRate = (hourlyRateLimit <= hourlyRateNormal) ? hourlyRateLimit : hourlyRateNormal;
-
-        }else{
-            hourlyRate = 0.0;
-            hourlyRateNormal =0.0;
+            hourlyRate =
+                if ((hourlyRateLimit <= hourlyRateNormal)) hourlyRateLimit else hourlyRateNormal
+        } else {
+            hourlyRate = 0.0
+            hourlyRateNormal = 0.0
         }
     }
 
-    private void setHourlyBasicRate()
-    {
-        TextView tHourlyBasicRate = findViewById(R.id.hourlyBasicRate);
-        tHourlyBasicRate.setText(df.format(hourlyRateNormal));
+    private fun setHourlyBasicRate() {
+        val tHourlyBasicRate = findViewById<TextView>(R.id.hourlyBasicRate)
+        tHourlyBasicRate.text = df.format(hourlyRateNormal)
     }
 
-    private double calculateOtPay15()
-    {
-        String inputHour1 = ((EditText)findViewById(R.id.inputOt1)).getText().toString();
-        String rate1 = ((EditText)findViewById(R.id.editRate1)).getText().toString();
-        TextView viewRate1 = findViewById(R.id.textOtRate1);
+    private fun calculateOtPay15(): Double {
+        val inputHour1 = (findViewById<View>(R.id.inputOt1) as EditText).text.toString()
+        val rate1 = (findViewById<View>(R.id.editRate1) as EditText).text.toString()
+        val viewRate1 = findViewById<TextView>(R.id.textOtRate1)
 
-        if( hourlyRate == 0.0 || rate1.isEmpty()) return 0.0;
-        String text1 = rate1 +  ": $";
-        viewRate1.setText(text1);
-        otPay15 = hourlyRate * Double.parseDouble(rate1);
+        if (hourlyRate == 0.0 || rate1.isEmpty()) return 0.0
+        val text1 = "$rate1: $"
+        viewRate1.text = text1
+        otPay15 = hourlyRate * rate1.toDouble()
 
-        if(inputHour1.isEmpty()) return 0.0;
+        if (inputHour1.isEmpty()) return 0.0
 
-        return otPay15 * Double.parseDouble(inputHour1);
+        return otPay15 * inputHour1.toDouble()
     }
 
-    private void setOtPay15()
-    {
-        TextView tOtPay15 = findViewById(R.id.showOtPay1);
-        tOtPay15.setText(df.format(calculateOtPay15()));
+    private fun setOtPay15() {
+        val tOtPay15 = findViewById<TextView>(R.id.showOtPay1)
+        tOtPay15.text = df.format(calculateOtPay15())
 
-        TextView otPay15hrs = findViewById(R.id.otPay15hrs);
-        if(hourlyRate == 0.0) {
-            otPay15hrs.setText("");
-        }else {
-            String text = getString(R.string.per_hours, df.format(otPay15));
-            otPay15hrs.setText(text);
+        val otPay15hrs = findViewById<TextView>(R.id.otPay15hrs)
+        if (hourlyRate == 0.0) {
+            otPay15hrs.text = ""
+        } else {
+            val text = getString(R.string.per_hours, df.format(otPay15))
+            otPay15hrs.text = text
         }
     }
 
 
-    private double calculateOtPay20()
-    {
-        String inputHour2 = ((EditText)findViewById(R.id.inputOt2)).getText().toString();
-        String rate2 = ((EditText)findViewById(R.id.editRate2)).getText().toString();
-        TextView viewRate2 = findViewById(R.id.textOtRate2);
+    private fun calculateOtPay20(): Double {
+        val inputHour2 = (findViewById<View>(R.id.inputOt2) as EditText).text.toString()
+        val rate2 = (findViewById<View>(R.id.editRate2) as EditText).text.toString()
+        val viewRate2 = findViewById<TextView>(R.id.textOtRate2)
 
-        if(hourlyRate == 0.0 || rate2.isEmpty()) return 0.0;
-        String text2 = rate2 + ": $";
-        viewRate2.setText(text2);
-        otPay20 = hourlyRate * Double.parseDouble(rate2);
+        if (hourlyRate == 0.0 || rate2.isEmpty()) return 0.0
+        val text2 = "$rate2: $"
+        viewRate2.text = text2
+        otPay20 = hourlyRate * rate2.toDouble()
 
-        if(inputHour2.isEmpty()) return 0.0;
+        if (inputHour2.isEmpty()) return 0.0
 
-        return otPay20 *  Double.parseDouble(inputHour2);
+        return otPay20 * inputHour2.toDouble()
     }
 
-    private void setOtPay20()
-    {
-        TextView tOtPay20 = findViewById(R.id.showOtPay2);
-        tOtPay20.setText(df.format(calculateOtPay20()));
+    private fun setOtPay20() {
+        val tOtPay20 = findViewById<TextView>(R.id.showOtPay2)
+        tOtPay20.text = df.format(calculateOtPay20())
 
-        TextView otPay20hrs = findViewById(R.id.otPay20hrs);
-        if(hourlyRate == 0.0) {
-            otPay20hrs.setText("");
-        }else {
-            String text = getString(R.string.per_hours, df.format(otPay20));
-            otPay20hrs.setText(text);
+        val otPay20hrs = findViewById<TextView>(R.id.otPay20hrs)
+        if (hourlyRate == 0.0) {
+            otPay20hrs.text = ""
+        } else {
+            val text = getString(R.string.per_hours, df.format(otPay20))
+            otPay20hrs.text = text
         }
     }
 
-    private double calculateOtPay30()
-    {
-        String inputHour3 = ((EditText)findViewById(R.id.inputOt3)).getText().toString();
-        String rate3 = ((EditText)findViewById(R.id.editRate3)).getText().toString();
-        TextView viewRate3 = findViewById(R.id.textOtRate3);
+    private fun calculateOtPay30(): Double {
+        val inputHour3 = (findViewById<View>(R.id.inputOt3) as EditText).text.toString()
+        val rate3 = (findViewById<View>(R.id.editRate3) as EditText).text.toString()
+        val viewRate3 = findViewById<TextView>(R.id.textOtRate3)
 
-        if(hourlyRate == 0.0 || rate3.isEmpty()) return 0.0;
-        String text3 = rate3 + ": $";
-        viewRate3.setText(text3);
-        otPay30 = hourlyRate * Double.parseDouble(rate3);
+        if (hourlyRate == 0.0 || rate3.isEmpty()) return 0.0
+        val text3 = "$rate3: $"
+        viewRate3.text = text3
+        otPay30 = hourlyRate * rate3.toDouble()
 
-        if(inputHour3.isEmpty()) return 0.0;
+        if (inputHour3.isEmpty()) return 0.0
 
-        return otPay30 * Double.parseDouble(inputHour3);
+        return otPay30 * inputHour3.toDouble()
     }
 
-    private void setOtPay30()
-    {
-        TextView tOtPay30 = findViewById(R.id.showOtPay3);
-        tOtPay30.setText(df.format(calculateOtPay30()));
-        TextView otPay30hrs = findViewById(R.id.otPay30hrs);
+    private fun setOtPay30() {
+        val tOtPay30 = findViewById<TextView>(R.id.showOtPay3)
+        tOtPay30.text = df.format(calculateOtPay30())
+        val otPay30hrs = findViewById<TextView>(R.id.otPay30hrs)
 
-        if(hourlyRate == 0.0) {
-            otPay30hrs.setText("");
-        }else {
-            String text = getString(R.string.per_hours, df.format(otPay30));
-            otPay30hrs.setText(text);
+        if (hourlyRate == 0.0) {
+            otPay30hrs.text = ""
+        } else {
+            val text = getString(R.string.per_hours, df.format(otPay30))
+            otPay30hrs.text = text
         }
     }
 
-    private double calculateOtPayTotal()
-    {
-        return calculateOtPay15() + calculateOtPay20() + calculateOtPay30();
+    private fun calculateOtPayTotal(): Double {
+        return calculateOtPay15() + calculateOtPay20() + calculateOtPay30()
     }
 
-    private void setOtPayTotal()
-    {
-        ((TextView)findViewById(R.id.showOtPayTotal)).setText(df.format(calculateOtPayTotal()));
+    private fun setOtPayTotal() {
+        (findViewById<View>(R.id.showOtPayTotal) as TextView).text =
+            df.format(calculateOtPayTotal())
     }
 
-    private Double getOtherSalary(){
-        String eOther =((EditText)findViewById(R.id.inputOther)).getText().toString();
-        if(eOther.isEmpty()){
-            return 0.0;
-        }else{
-            return Double.parseDouble(eOther);
+    private val otherSalary: Double
+        get() {
+            val eOther =
+                (findViewById<View>(R.id.inputOther) as EditText).text.toString()
+            return if (eOther.isEmpty()) {
+                0.0
+            } else {
+                eOther.toDouble()
+            }
         }
-    }
 
-    private void setTotalSalary() {
-        TextView tTotalSalary = findViewById(R.id.showTotalSalary);
-        String eBasicSalary =((EditText)findViewById(R.id.inputBasicSalary)).getText().toString();
+    private fun setTotalSalary() {
+        val tTotalSalary = findViewById<TextView>(R.id.showTotalSalary)
+        val eBasicSalary = (findViewById<View>(R.id.inputBasicSalary) as EditText).text.toString()
 
-        if(eBasicSalary.isEmpty()) {
-            tTotalSalary.setText("0");
-        }else{
-            tTotalSalary.setText(df.format(Double.parseDouble(eBasicSalary) + calculateOtPayTotal() + getOtherSalary()));
+        if (eBasicSalary.isEmpty()) {
+            tTotalSalary.text = "0"
+        } else {
+            tTotalSalary.text =
+                df.format(eBasicSalary.toDouble() + calculateOtPayTotal() + otherSalary)
         }
     }
 
     //Set up HyperLink
-    private void setupHyperLink(){
-        TextView linkTextView = findViewById(R.id.mom_website);
-        linkTextView.setMovementMethod(LinkMovementMethod.getInstance());
+    private fun setupHyperLink() {
+        val linkTextView = findViewById<TextView>(R.id.mom_website)
+        linkTextView.movementMethod = LinkMovementMethod.getInstance()
     }
 }
