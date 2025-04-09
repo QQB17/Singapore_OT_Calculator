@@ -1,9 +1,10 @@
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("com.google.gms.google-services")
-    kotlin("android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.services)
+
 }
 
 android {
@@ -73,7 +74,24 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.annotation)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.core.ktx)
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso)
+    androidTestImplementation(libs.android.support.test.rules)
+    androidTestImplementation(libs.android.support.test.runner)
+
+    // Import Firebase BOM
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
+    /*implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.annotation:annotation:1.8.2")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -88,5 +106,5 @@ dependencies {
 
     // Import Firebase BOM
     implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-analytics")*/
 }
