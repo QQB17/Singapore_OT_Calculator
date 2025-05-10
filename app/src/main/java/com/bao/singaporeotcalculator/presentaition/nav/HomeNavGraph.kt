@@ -8,11 +8,11 @@ import com.bao.singaporeotcalculator.presentaition.ui.HomeScreen
 
 fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
     navigation(
-        startDestination = Screen.Home.route,
-        route = HomeScreen.Landing.route
+        startDestination = HomeScreen.Landing.route,
+        route = Screen.Home.route
     ) {
-        composable(route = Screen.Home.route) {
-            HomeScreen()
+        composable(route = HomeScreen.Landing.route) {
+            HomeScreen(navController = navController)
         }
     }
 }
