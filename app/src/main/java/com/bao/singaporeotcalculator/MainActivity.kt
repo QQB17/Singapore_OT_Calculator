@@ -1,23 +1,37 @@
 package com.bao.singaporeotcalculator
 
-import android.os.Build
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import java.text.DecimalFormat
-import java.util.Locale
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.bao.singaporeotcalculator.presentaition.nav.MainNavHost
+import com.bao.singaporeotcalculator.presentaition.ui.theme.SingaporeOtCalculatorTheme
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            SingaporeOtCalculatorTheme() {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background,
+                ) {
+                    val navController = rememberNavController()
+                    MainNavHost(navController = navController)
+                }
+            }
+        }
+    }
+
+    /*
     private val df = DecimalFormat("#,###,###.##")
     private var hourlyRate = 0.0
     private var hourlyRateLimit = 0.0
@@ -294,5 +308,5 @@ class MainActivity : AppCompatActivity() {
     private fun setupHyperLink() {
         val linkTextView = findViewById<TextView>(R.id.mom_website)
         linkTextView.movementMethod = LinkMovementMethod.getInstance()
-    }
+    }*/
 }

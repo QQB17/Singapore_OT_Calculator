@@ -88,7 +88,6 @@ android {
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.annotation)
-    implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     testImplementation(libs.junit)
@@ -115,4 +114,7 @@ dependencies {
     // Import Firebase BOM
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+
+    // DataStore
+    implementation(libs.datastore.preferences)
 }
