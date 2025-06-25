@@ -1,0 +1,128 @@
+# .github/workflows/build.yml
+name: Android Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx2048m"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      apk_artifact: ${{ steps.extract_apk_name.outputs.apk_file_name }}
+      aab_artifact: ${{ steps.extract_aab_name.outputs.aab_file_name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Run Lint (beta release only)
+        run: ./gradlew lintBetaRelease
+
+      - name: Run Unit Test (beta release only)
+        run: ./gradlew testBetaReleaseUnitTest
+
+      # Build AAB file require link to Goole Play Store
+      - name: Build only bundleProductionRelease and assembleBetaRelease
+        run: ./gradlew bundleProductionRelease assembleBetaRelease
+
+      - name: Find APK or AAB files with custom name
+        id: find_artifacts
+        run: |
+          echo "Artifacts:"
+          find app/build/outputs -type f \( -name "*.apk" -o -name "*.aab" \) -exec ls -lh {} \;
+          echo "apk_path=$(find app/build/outputs -type f -name '*.apk' | head -n 1)" >> $GITHUB_OUTPUT
+          echo "aab_path=$(find app/build/outputs -type f -name '*.aab' | head -n 1)" >> $GITHUB_OUTPUT
+
+      - name: Extract AAB filename
+        id: extract_aab_name
+        run: |
+          AAB_FILE_NAME=$(basename "${{ steps.find_artifacts.outputs.aab_path }}")
+          echo "aab_file_name=$AAB_FILE_NAME" >> $GITHUB_OUTPUT
+
+      - name: Extract APK filename
+        id: extract_apk_name
+        run: |
+          APK_FILE_NAME=$(basename "${{ steps.find_artifacts.outputs.apk_path }}")
+          echo "apk_file_name=$APK_FILE_NAME" >> $GITHUB_OUTPUT
+
+      - name: Upload APK artifact with custom file name
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.extract_apk_name.outputs.apk_file_name }}
+          path: ${{ steps.find_artifacts.outputs.apk_path }}
+
+      - name: Upload AAB artifact with custom file name
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.extract_aab_name.outputs.aab_file_name }}
+          path: ${{ steps.find_artifacts.outputs.aab_path }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.apk_artifact }}
+          path: app/build/outputs/apk/
+
+      - name: Download AAB artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.aab_artifact }}
+          path: app/build/outputs/bundle/
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Generate release notes from last commit
+        id: release_notes
+        run: |
+          git log -1 --pretty=format:"%h - %s (%an)" > release-notes.txt
+
+      - name: Deploy APK to Firebase App Distribution (Beta)
+        run: |
+          APK_PATH=$(find app/build/outputs/apk -name "*.apk" | head -n 1)
+          echo "Deploying APK: $APK_PATH"
+          firebase appdistribution:distribute "$APK_PATH" \
+            --app ${{ secrets.FIREBASE_BETA_APP_ID }} \
+            --token ${{ secrets.FIREBASE_TOKEN }} \
+            --groups "dev" \
+            --release-notes-file release-notes.txt
+
+      - name: Deploy AAB to Firebase App Distribution (Production)
+        run: |
+          AAB_PATH=$(find app/build/outputs/bundle -name "*.aab" | head -n 1)
+          echo "Deploying AAB: $AAB_PATH"
+          firebase appdistribution:distribute "$AAB_PATH" \
+            --app ${{ secrets.FIREBASE_PROD_APP_ID }} \
+            --token ${{ secrets.FIREBASE_TOKEN }} \
+            --groups "dev" \
+            --release-notes-file release-notes.txt
